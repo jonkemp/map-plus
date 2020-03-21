@@ -21,7 +21,7 @@ Or [unpkg](https://unpkg.com/map-plus/)
 <script src="https://unpkg.com/map-plus@1.0.0/umd/index.js" />
 ```
 
-Check out the unit tests on [CodePen](https://codepen.io/jonkemp/full/YzPBmwz).
+Check out the unit tests on [CodePen](https://codepen.io/jonkemp/full/bGdjJVw).
 
 ## Usage
 
