@@ -1,5 +1,9 @@
-const assert = require('assert');
-const map = require('./');
+/* global map */
+const { assert } = chai;
+
+mocha.setup('bdd');
+mocha.checkLeaks();
+
 const noop = () => {};
 const initial = (array, n, guard) => Array.prototype.slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
 const first = (array, n, guard) => {
@@ -51,3 +55,5 @@ describe('map', () => {
 		assert.deepEqual(map(people, 'name'), ['moe', 'curly']);
 	});
 });
+
+mocha.run();
