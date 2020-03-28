@@ -9,7 +9,8 @@
 	"extends": "eslint:recommended",
 	"globals": {
 		"Atomics": "readonly",
-		"SharedArrayBuffer": "readonly"
+		"SharedArrayBuffer": "readonly",
+		"chai": "readonly"
 	},
 	"parserOptions": {
 		"ecmaVersion": 2018,
@@ -37,7 +38,6 @@
 			"always"
 		],
 		"no-use-before-define": "error",
-		"no-var": "error",
 		"prefer-const": "error",
 		"prefer-spread": "error",
 		"func-style": ["error", "declaration", { "allowArrowFunctions": true }],
