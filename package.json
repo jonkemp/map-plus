@@ -1,6 +1,6 @@
 {
 	"name": "map-plus",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Creates a new array of values by mapping each value in list through an iteratee.",
 	"main": "index.js",
 	"scripts": {
