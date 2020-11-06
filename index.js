@@ -14,12 +14,10 @@ var shallowProperty = key => obj => obj == null ? void 0 : obj[key];
 
 var getLength = shallowProperty('length');
 
-const MAX_ARRAY_INDEX = 2 ** 53 - 1;
-
 var isArrayLike = (collection) => {
 	const length = getLength(collection);
 
-	return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+	return typeof length == 'number' && length >= 0 && length <= Number.MAX_SAFE_INTEGER;
 };
 
 var identity = value => value;
