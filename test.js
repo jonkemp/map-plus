@@ -55,5 +55,3 @@ describe('map', () => {
 		assert.deepEqual(map(people, 'name'), ['moe', 'curly']);
 	});
 });
-
-mocha.run();
