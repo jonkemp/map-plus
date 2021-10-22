@@ -1,4 +1,4 @@
-# map-plus [![Build Status](https://travis-ci.com/jonkemp/map-plus.svg?branch=master)](https://travis-ci.com/jonkemp/map-plus)
+# map-plus ![Build Status](https://github.com/jonkemp/map-plus/actions/workflows/main.yml/badge.svg?branch=master)
 
 > Produces a new array of values by mapping each value in list through a transformation function (iteratee).
 
