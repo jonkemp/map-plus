@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Map Plus Tests</title>
+    <link rel="stylesheet" href="node_modules/mocha/mocha.css">
+</head>
+<body>
+    <div id="mocha"></div>
+
+    <!-- Testing libraries -->
+    <script src="node_modules/mocha/mocha.js"></script>
+    <script src="http://chaijs.com/chai.js"></script>
+
+    <!-- Initialize Mocha -->
+    <script>
+        mocha.setup({
+            ui: 'bdd',
+            reporter: 'spec'
+        });
+        window.expect = chai.expect;
+    </script>
+
+    <!-- Load your tests -->
+    <script src="umd/index.js"></script>
+    <script src="test.js"></script>
+
+    <!-- Run tests -->
+    <script>
+        // Custom reporter to show test progress
+        function log(type, msg) {
+            console.log(JSON.stringify({ type, msg }));
+        }
+
+        mocha.run()
+            .on('test', function(test) {
+                log('test', `Running: ${test.title}`);
+            })
+            .on('pass', function(test) {
+                log('pass', `✓ ${test.title}`);
+            })
+            .on('fail', function(test, err) {
+                log('fail', `✗ ${test.title}\n   ${err.message}`);
+            })
+            .on('end', function() {
+                log('end', JSON.stringify(this.stats));
+            });
+    </script>
+</body>
+</html>
