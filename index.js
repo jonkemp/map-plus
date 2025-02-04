@@ -1,80 +1,91 @@
-var isObject = obj => {
+const isObject = (obj) => {
 	const type = typeof obj;
 
-	return type === 'function' || type === 'object' && !!obj;
+	return type === 'function' || (type === 'object' && !!obj);
 };
 
-var getKeys = (obj) => {
+const getKeys = (obj) => {
 	if (!isObject(obj)) return [];
 
 	return Object.keys(obj);
 };
 
-var shallowProperty = key => obj => obj == null ? void 0 : obj[key];
+const shallowProperty = (key) => (obj) =>
+	obj == null ? undefined : obj[key];
 
-var getLength = shallowProperty('length');
+const getLength = shallowProperty('length');
 
-var isArrayLike = (collection) => {
+const isArrayLike = (collection) => {
 	const length = getLength(collection);
 
-	return typeof length == 'number' && length >= 0 && length <= Number.MAX_SAFE_INTEGER;
+	return typeof length === 'number' &&
+		   length >= 0 &&
+		   length <= Number.MAX_SAFE_INTEGER;
 };
 
-var identity = value => value;
+const identity = (value) => value;
 
-var isFunction = obj => toString.call(obj) === '[object Function]';
+const isFunction = (obj) =>
+	Object.prototype.toString.call(obj) === '[object Function]';
 
-var optimizeCb = (func, context, argCount) => {
-	if (context === void 0) return func;
+const optimizeCb = (func, context, argCount) => {
+	if (context === undefined) return func;
+
 	switch (argCount == null ? 3 : argCount) {
-		case 1: return value => func.call(context, value);
+	  case 1:
+			return (value) => func.call(context, value);
 			// The 2-argument case is omitted because we’re not using it.
-		case 3: return (value, index, collection) => func.call(context, value, index, collection);
-		case 4: return (accumulator, value, index, collection) => func.call(context, accumulator, value, index, collection);
+	  case 3:
+			return (value, index, collection) =>
+		  func.call(context, value, index, collection);
+	  case 4:
+			return (accumulator, value, index, collection) =>
+		  func.call(context, accumulator, value, index, collection);
+	  default:
+			return (...args) => func.apply(context, args);
 	}
-
-	return (...args) => func.apply(context, args);
 };
 
-var isMatch = (object, attrs) => {
+const isMatch = (object, attrs) => {
 	const keys = getKeys(attrs);
-	const {length} = keys;
+	const { length } = keys;
 
 	if (object == null) return !length;
+
 	const obj = Object(object);
 
 	for (let i = 0; i < length; i++) {
-		const key = keys[i];
+	  const key = keys[i];
 
-		if (attrs[key] !== obj[key] || !(key in obj)) return false;
+	  if (attrs[key] !== obj[key] || !(key in obj)) return false;
 	}
 
 	return true;
 };
 
-var matcher = attrs => {
-	attrs = Object.assign({}, attrs);
+const matcher = (attrs) => {
+	attrs = { ...attrs };
 
-	return obj => isMatch(obj, attrs);
+	return (obj) => isMatch(obj, attrs);
 };
 
 const deepGet = (obj, path) => {
 	const { length } = path;
 
 	for (let i = 0; i < length; i++) {
-		if (obj == null) return void 0;
-		obj = obj[path[i]];
+	  if (obj == null) return undefined;
+	  obj = obj[path[i]];
 	}
 
-	return length ? obj : void 0;
+	return length ? obj : undefined;
 };
 
-var property = path => {
+const property = (path) => {
 	if (!Array.isArray(path)) {
-		return shallowProperty(path);
+	  return shallowProperty(path);
 	}
 
-	return obj => deepGet(obj, path);
+	return (obj) => deepGet(obj, path);
 };
 
 const baseIteratee = (value, context, argCount) => {
@@ -86,25 +97,26 @@ const baseIteratee = (value, context, argCount) => {
 };
 
 let iteratee;
+const exportIteratee = (iteratee = (value, context) =>
+	baseIteratee(value, context, Infinity)
+);
 
-const exportIteratee = iteratee = (value, context) => baseIteratee(value, context, Infinity);
-
-var cb = (value, context, argCount) => {
+const cb = (value, context, argCount) => {
 	if (iteratee !== exportIteratee) return iteratee(value, context);
 
 	return baseIteratee(value, context, argCount);
 };
 
-var map = (obj, iteratee, context) => {
+const map = (obj, iteratee, context) => {
 	iteratee = cb(iteratee, context);
 	const keys = !isArrayLike(obj) && getKeys(obj);
 	const { length } = keys || obj;
-	const results = Array(length);
+	const results = new Array(length);
 
 	for (let index = 0; index < length; index++) {
-		const currentKey = keys ? keys[index] : index;
+	  const currentKey = keys ? keys[index] : index;
 
-		results[index] = iteratee(obj[currentKey], currentKey, obj);
+	  results[index] = iteratee(obj[currentKey], currentKey, obj);
 	}
 
 	return results;
