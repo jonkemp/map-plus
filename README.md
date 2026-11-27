@@ -57,6 +57,14 @@ Default: `none`
 
 Function to apply. Or property name to pass.
 
+## Dependency maintenance
+
+Review Dependabot alerts and update PRs weekly. Prioritize high and critical alerts as they arrive. For alerts without a fix PR, check which direct dependency brings in the affected package, then upgrade, remove, or replace that dependency. Record a follow-up for any alert that remains open.
+
+Use Node.js 22.12 or newer for development. Run `npm ci`, `npm run lint`, `npm test`, and `npm audit` when updating dependencies. After merging a security fix, confirm that GitHub closes the corresponding alerts.
+
+The Mocha overrides keep `glob` and `minimatch` on patched releases. Recheck them on Mocha upgrades and remove them when Mocha resolves patched versions on its own.
+
 ## License
 
 MIT
