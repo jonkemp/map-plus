@@ -10,7 +10,6 @@
 
     <!-- Testing libraries -->
     <script src="node_modules/mocha/mocha.js"></script>
-    <script src="http://chaijs.com/chai.js"></script>
 
     <!-- Initialize Mocha -->
     <script>
@@ -18,15 +17,15 @@
             ui: 'bdd',
             reporter: 'spec'
         });
-        window.expect = chai.expect;
     </script>
 
     <!-- Load your tests -->
     <script src="umd/index.js"></script>
-    <script src="test.js"></script>
 
     <!-- Run tests -->
-    <script>
+    <script type="module">
+        import './test.js';
+
         // Custom reporter to show test progress
         function log(type, msg) {
             console.log(JSON.stringify({ type, msg }));
@@ -43,6 +42,7 @@
                 log('fail', `✗ ${test.title}\n   ${err.message}`);
             })
             .on('end', function() {
+                window.testResults = this.stats;
                 log('end', JSON.stringify(this.stats));
             });
     </script>
