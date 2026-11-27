@@ -1,7 +1,6 @@
 /* global map */
-const { assert } = chai;
+import { assert } from './node_modules/chai/chai.js';
 
-mocha.setup('bdd');
 mocha.checkLeaks();
 
 const noop = () => {};
